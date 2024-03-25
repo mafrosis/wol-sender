@@ -24,3 +24,4 @@ COPY --from=builder /dist /dist
 RUN python -m pip install --no-index --find-links=/dist --no-cache wol_sender
 
 ENTRYPOINT ["wol-sender"]
+CMD ["start"]

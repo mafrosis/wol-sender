@@ -1,10 +1,11 @@
+import asyncio
 import os
 import logging
 
 import click
 
 
-from wol_sender.main import ohai
+from wol_sender.main import send as send_, start as start_
 
 
 logger = logging.getLogger('wol_sender')
@@ -22,6 +23,13 @@ def cli(debug):
 
 
 @cli.command
-@click.argument('name')
-def hello(name: str):
-    ohai(name)
+@click.argument('mac')
+def send(mac: str):
+    send_(mac)
+
+
+@cli.command
+@click.option('--host', help='Bind server to hostname', default='127.0.0.1', type=str)
+@click.option('--port', help='Bind server to port', default=3001, type=int)
+def start(host: str, port: int):
+    asyncio.run(start_(host, port))

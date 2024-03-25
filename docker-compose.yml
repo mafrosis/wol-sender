@@ -3,6 +3,8 @@ services:
   wol-sender:
     image: ghcr.io/mafrosis/wol_sender:dev
     restart: unless-stopped
+    network_mode: host
+    command: start --host 0.0.0.0 --port 3001
     build:
       context: .
     environment:
