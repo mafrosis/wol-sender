@@ -1,0 +1,19 @@
+---
+services:
+  wol-sender:
+    image: ghcr.io/mafrosis/wol_sender:dev
+    restart: unless-stopped
+    build:
+      context: .
+    environment:
+      - TZ=Australia/Melbourne
+
+  test:
+    image: ghcr.io/mafrosis/wol_sender:test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./wol_sender:/src/wol_sender
+    depends_on:
+      - wol-sender
