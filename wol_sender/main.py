@@ -1,10 +1,9 @@
+import asyncio
 import logging
 
-import asyncio
-from fastapi import APIRouter, FastAPI, Response
 import uvicorn
+from fastapi import APIRouter, FastAPI, Response
 from wakeonlan import send_magic_packet
-
 
 logger = logging.getLogger('wol_sender')
 

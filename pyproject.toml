@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools >= 40.6.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "wol_sender"
 description = "WOL API server & CLI"
-dynamic = ["version", "readme"]
+dynamic = ["version"]
 requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -25,15 +25,37 @@ dependencies = [
 [project.scripts]
 wol-sender = "wol_sender.cli:cli"
 
-[tool.setuptools.packages.find]
+##### Hatch
+
+[tool.hatch.version]
+path = "wol_sender/__init__.py"
+
+[tool.hatch.build.targets.sdist]
 exclude = ["test*", "venv*"]
 
-[tool.setuptools.package-data]
-wol_sender = ["*.txt", "*.md"]
+[tool.hatch.metadata]
+allow-direct-references = true
 
-[tool.setuptools.dynamic]
-version = {attr = "wol_sender.__version__"}
-readme = {file = ["README.md"]}
 
-[tool.distutils.bdist_wheel]
-universal = true
+[tool.hatch.envs.default]
+dependencies = ["ipdb"]
+
+[tool.hatch.envs.test]
+dependencies = [
+	"pytest",
+	"pytest-sugar",
+	"pytest-mypy",
+]
+
+[tool.hatch.envs.test.scripts]
+test = "pytest --disable-pytest-warnings test"
+mypy = "pytest --mypy wol_sender"
+
+[tool.hatch.envs.lint]
+detached = true  # do not install package
+dependencies = [
+	"pylint",
+]
+
+[tool.hatch.envs.lint.scripts]
+lint = "pylint wol_sender"

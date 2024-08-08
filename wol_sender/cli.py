@@ -1,12 +1,11 @@
 import asyncio
-import os
 import logging
+import os
 
 import click
 
-
-from wol_sender.main import send as send_, start as start_
-
+from wol_sender.main import send as send_
+from wol_sender.main import start as start_
 
 logger = logging.getLogger('wol_sender')
 sh = logging.StreamHandler()
