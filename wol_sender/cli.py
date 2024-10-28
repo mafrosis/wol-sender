@@ -4,6 +4,7 @@ import os
 
 import click
 
+from wol_sender.main import ping as ping_
 from wol_sender.main import send as send_
 from wol_sender.main import start as start_
 
@@ -25,6 +26,13 @@ def cli(debug):
 @click.argument('mac')
 def send(mac: str):
     send_(mac)
+
+
+@cli.command
+@click.argument('hostname')
+@click.pass_context
+def ping(ctx, hostname: str):
+    ctx.exit(ping_(hostname))
 
 
 @cli.command
